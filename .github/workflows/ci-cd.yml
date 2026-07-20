@@ -19,8 +19,8 @@ permissions:
 
 env:
   DOCKER_REGISTRY: ghcr.io
-  BACKEND_IMAGE: ghcr.io/jerney/jerney-backend
-  FRONTEND_IMAGE: ghcr.io/jerney/jerney-frontend
+  BACKEND_IMAGE: ghcr.io/Jerney/jerney-backend
+  FRONTEND_IMAGE: ghcr.io/Jerney/jerney-frontend
 
 jobs:
   # ==============================================================
