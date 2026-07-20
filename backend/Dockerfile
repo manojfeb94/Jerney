@@ -11,7 +11,7 @@ FROM node:24-alpine AS production
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
 # Security: remove unnecessary packages
-RUN apk --no-cache add dumb-init:1.2.5
+RUN apk --no-cache add dumb-init~=1.2.5
 
 WORKDIR /app
 
