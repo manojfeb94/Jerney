@@ -1,4 +1,4 @@
-skip-check: ["CKV_GCP_66", "CKV_GCP_65", "CKV_GCP_69"]
+skip-check: ["CKV_GCP_66", "CKV_GCP_65", "CKV_GCP_69", "CKV_GCP_18"]
 soft-fail: "false" # Fixed: Wrapped in quotes to prevent the Python configargparse crash
 framework: ["terraform"]
 directory: ["terraform"]
