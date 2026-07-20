@@ -259,3 +259,35 @@ jobs:
           git add k8s/jerney.yaml
           git diff --cached --quiet || git commit -m "ci: update k8s images to ${{ steps.sha.outputs.short }} [skip ci]"
           git push
+
+  gcp-operations:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Authenticate with GCP via Workload Identity Federation
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/165993017700/locations/global/workloadIdentityPools/github-pool/providers/github-provider' # 👈 Replace with your string
+          service_account: 'github-actions-sa@project-722e0926-2abc-479e-97f.iam.gserviceaccount.com' # 👈 Replace with your SA email
+
+      # Setting up the gcloud CLI tool automatically uses the credentials generated above
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+
+      # Example 1: Run standard gcloud commands
+      - name: Test gcloud CLI
+        run: |
+          gcloud storage buckets list
+
+      # Example 2: Run Terraform commands natively
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init & Apply
+        run: |
+          terraform init
+          terraform plan
