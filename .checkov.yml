@@ -1,8 +1,4 @@
-compact:
-  - CKV_AWS_39   # Public access to EKS endpoint (needed for kubectl)
-  - CKV_AWS_58   # EKS public endpoint (intentional for dev access)
-soft-fail: false
-framework:
-  - terraform
-directory:
-  - terraform
+skip-check: ["CKV_AWS_39", "CKV_AWS_58"]
+soft-fail: "false" # Fixed: Wrapped in quotes to prevent the Python configargparse crash
+framework: ["terraform"]
+directory: ["terraform"]
