@@ -1,11 +1,11 @@
 # 1. Hardened GKE Zonal Cluster Control Plane
 resource "google_container_cluster" "primary" {
+  #checkov:skip=CKV_GCP_65:Intentionally skipping Google Groups RBAC as it requires a real Google Workspace domain setup.
+  #checkov:skip=CKV_GCP_18:Intentionally allowing public endpoint access with master authorized networks for easy home dev access.
+  #checkov:skip=CKV_GCP_69:Using Workload Identity pool mapping below; bypassing legacy plane check.
+
   name     = var.cluster_name
   location = "${var.region}-a" 
-
-  # bridgecrew:skip=CKV_GCP_65:Intentionally skipping Google Groups RBAC as it requires a real Google Workspace domain, not possible for personal demo.
-  # bridgecrew:skip=CKV_GCP_18:Intentionally allowing public endpoint access with master authorized networks so kubectl can connect directly from home without a VPN/Bastion.
-  # bridgecrew:skip=CKV_GCP_69:Using Workload Identity pool mapping below; bypassing metadata legacy plane check.
 
   network    = google_compute_network.vpc.name
   subnetwork = google_compute_subnetwork.subnet.name
@@ -27,11 +27,6 @@ resource "google_container_cluster" "primary" {
 
   binary_authorization {
     evaluation_mode = "PROJECT_SINGLETON_POLICY_ENFORCE"
-  }
-
-  # Added placeholder block to satisfy structural parsers for CKV_GCP_65
-  authenticator_groups_config {
-    security_group = "gke-security-groups@example.com"
   }
 
   private_cluster_config {
